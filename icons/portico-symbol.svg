@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Portico Nodex symbol</title>
+  <desc id="desc">Circular koi-flow style icon with a structural portal frame, nodes and deformed result ribbon.</desc>
+  <defs>
+    <radialGradient id="core" cx="43%" cy="36%" r="68%"><stop offset="0" stop-color="#9FEFF1"/><stop offset=".44" stop-color="#168EAA"/><stop offset=".78" stop-color="#0A526C"/><stop offset="1" stop-color="#062538"/></radialGradient>
+    <linearGradient id="cyan" x1="78" y1="78" x2="420" y2="428" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C7F6EF"/><stop offset=".5" stop-color="#31C3CE"/><stop offset="1" stop-color="#07546D"/></linearGradient>
+    <linearGradient id="coral" x1="420" y1="84" x2="106" y2="438" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFE1D3"/><stop offset=".54" stop-color="#FF9B7D"/><stop offset="1" stop-color="#EF6C5A"/></linearGradient>
+    <linearGradient id="result" x1="124" y1="296" x2="388" y2="296" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#31C3CE"/><stop offset="1" stop-color="#EF6C5A"/></linearGradient>
+    <filter id="shadow" x="-22%" y="-22%" width="144%" height="152%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#062538" flood-opacity=".18"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <circle cx="256" cy="256" r="156" fill="url(#core)"/>
+    <circle cx="206" cy="180" r="76" fill="#fff" opacity=".13"/>
+    <path d="M256 54A202 202 0 0 0 78 350" fill="none" stroke="url(#cyan)" stroke-width="34" stroke-linecap="round"/>
+    <path d="M256 458A202 202 0 0 0 434 162" fill="none" stroke="url(#coral)" stroke-width="34" stroke-linecap="round"/>
+    <g fill="none" stroke="#F3FFFF" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M158 340V164L256 118L354 164V340"/>
+      <path d="M158 220H354" opacity=".8"/>
+    </g>
+    <g fill="none" stroke="#BFEFF1" stroke-width="7" stroke-linecap="round" opacity=".7">
+      <path d="M158 164L256 220L354 164"/>
+      <path d="M158 340L256 220L354 340"/>
+    </g>
+    <path d="M158 340C204 282 284 272 354 320" fill="none" stroke="url(#result)" stroke-width="16" stroke-linecap="round"/>
+    <g fill="#062538" stroke="#FFFFFF" stroke-width="5">
+      <circle cx="158" cy="340" r="13"/><circle cx="158" cy="164" r="13"/><circle cx="256" cy="118" r="13"/><circle cx="354" cy="164" r="13"/><circle cx="354" cy="340" r="13"/><circle cx="256" cy="220" r="12"/>
+    </g>
+  </g>
+</svg>
