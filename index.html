@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conmuta · Software de ingeniería estructural, SHM e hidráulica</title>
+  <meta name="description" content="Conmuta desarrolla software de ingeniería para modelación FEM, gemelos digitales, monitoreo estructural, hidrología, hidráulica y socavación." />
+  <meta name="theme-color" content="#062538" />
+  <link rel="icon" href="icons/conmuta-symbol.svg" />
+  <meta property="og:title" content="Conmuta · Engineering software for real structures" />
+  <meta property="og:description" content="Portico/Nodex, ReWind, Koi-Flow y OpenNodex: herramientas web para análisis FEM, monitoreo estructural, hidráulica y gemelos digitales." />
+  <style>
+    :root {
+      --ink: #062538;
+      --ink-2: #0a526c;
+      --muted: #466b78;
+      --soft: #eaf4f6;
+      --soft-2: #f6fbfb;
+      --paper: #ffffff;
+      --line: rgba(6, 37, 56, .12);
+      --cyan: #31c3ce;
+      --cyan-2: #9feff1;
+      --coral: #ef6c5a;
+      --coral-2: #ffb099;
+      --green: #45d6c9;
+      --shadow: 0 26px 70px rgba(6, 37, 56, .14);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% -8%, rgba(159, 239, 241, .74), transparent 34rem),
+        radial-gradient(circle at 92% 12%, rgba(255, 176, 153, .55), transparent 30rem),
+        linear-gradient(180deg, #f5fbfc 0%, #eef6f8 42%, #f9fbfb 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    ::selection { background: var(--cyan); color: #041720; }
+
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(22px);
+      background: rgba(246, 251, 252, .74);
+      border-bottom: 1px solid rgba(6, 37, 56, .08);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 850;
+      letter-spacing: -.035em;
+      font-size: 25px;
+    }
+
+    .brand img { width: 38px; height: 38px; filter: drop-shadow(0 10px 18px rgba(6,37,56,.14)); }
+    .brand small { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 750; margin-top: -2px; }
+
+    .nav-links { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--muted); }
+    .nav-links a { padding: 10px 13px; border-radius: 999px; }
+    .nav-links a:hover { background: rgba(49, 195, 206, .12); color: var(--ink); }
+    .nav-cta {
+      background: var(--ink);
+      color: #f6ffff !important;
+      box-shadow: 0 12px 30px rgba(6,37,56,.18);
+    }
+    .nav-cta:hover { background: #0a526c !important; }
+
+    .hero {
+      padding: 88px 0 58px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(340px, .94fr);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      border: 1px solid rgba(49, 195, 206, .26);
+      background: rgba(255,255,255,.64);
+      color: var(--ink-2);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 28px rgba(49,195,206,.12);
+    }
+    .eyebrow::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--coral)); }
+
+    h1 {
+      margin: 24px 0 22px;
+      max-width: 820px;
+      font-size: clamp(48px, 7vw, 94px);
+      line-height: .93;
+      letter-spacing: -.075em;
+    }
+    .grad {
+      background: linear-gradient(95deg, var(--ink) 0%, var(--ink-2) 38%, var(--cyan) 62%, var(--coral) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      margin: 0 0 30px;
+      max-width: 650px;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.58;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-weight: 760;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--ink); color: #f6ffff; box-shadow: 0 18px 42px rgba(6,37,56,.2); border-color: transparent; }
+    .btn-primary:hover { background: #0a526c; }
+    .btn-soft { background: rgba(255,255,255,.72); color: var(--ink); }
+    .btn-soft:hover { box-shadow: 0 16px 38px rgba(6,37,56,.1); }
+
+    .hero-panel {
+      position: relative;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, .68);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: 540px;
+      isolation: isolate;
+    }
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: -120px -130px auto auto;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(239,108,90,.4), transparent 62%);
+      z-index: -1;
+    }
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto auto -150px -120px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(49,195,206,.52), transparent 66%);
+      z-index: -1;
+    }
+
+    .window {
+      margin: 24px;
+      border-radius: 22px;
+      border: 1px solid rgba(6,37,56,.1);
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 24px 50px rgba(6,37,56,.13);
+      overflow: hidden;
+    }
+    .windowbar {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(235,246,248,.9));
+      border-bottom: 1px solid var(--line);
+    }
+    .dot { width: 11px; height: 11px; border-radius: 999px; background: var(--coral); }
+    .dot:nth-child(2) { background: #f3c768; }
+    .dot:nth-child(3) { background: var(--cyan); }
+    .window-title { margin-left: auto; margin-right: auto; color: var(--muted); font-size: 12px; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
+
+    .viz {
+      display: grid;
+      grid-template-columns: 168px 1fr 150px;
+      min-height: 346px;
+      background:
+        linear-gradient(90deg, rgba(6,37,56,.035) 1px, transparent 1px) 0 0 / 38px 38px,
+        linear-gradient(180deg, rgba(6,37,56,.035) 1px, transparent 1px) 0 0 / 38px 38px,
+        radial-gradient(circle at 70% 36%, rgba(49,195,206,.15), transparent 32%),
+        #fbffff;
+    }
+    .side, .right { padding: 16px; border-right: 1px solid var(--line); }
+    .right { border-right: 0; border-left: 1px solid var(--line); }
+    .tree-line { height: 12px; border-radius: 9px; background: rgba(6,37,56,.08); margin-bottom: 12px; }
+    .tree-line:nth-child(2n) { width: 72%; }
+    .tree-line:nth-child(3n) { width: 48%; background: rgba(49,195,206,.18); }
+    .canvas { position: relative; display: grid; place-items: center; overflow: hidden; }
+    .canvas svg { width: min(100%, 430px); filter: drop-shadow(0 24px 28px rgba(6,37,56,.12)); }
+    .pill-stack { position: absolute; left: 18px; bottom: 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .mini-pill { border-radius: 999px; padding: 7px 10px; background: rgba(255,255,255,.74); border: 1px solid var(--line); font-size: 11px; color: var(--muted); font-weight: 730; }
+    .gauge { height: 80px; border-radius: 18px; background: linear-gradient(135deg, rgba(49,195,206,.12), rgba(239,108,90,.14)); border: 1px solid var(--line); margin-bottom: 12px; }
+
+    .trust {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      padding: 12px 0 74px;
+    }
+    .trust-card {
+      background: rgba(255,255,255,.68);
+      border: 1px solid rgba(255,255,255,.84);
+      border-radius: 20px;
+      padding: 18px 18px;
+      box-shadow: 0 10px 30px rgba(6,37,56,.06);
+    }
+    .trust-card b { display: block; font-size: 22px; letter-spacing: -.03em; }
+    .trust-card span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    .section { padding: 82px 0; }
+    .section-head { display: grid; grid-template-columns: .72fr 1fr; gap: 40px; align-items: end; margin-bottom: 30px; }
+    .kicker { color: var(--coral); text-transform: uppercase; letter-spacing: .13em; font-size: 12px; font-weight: 850; margin-bottom: 14px; }
+    h2 { font-size: clamp(34px, 4.5vw, 58px); line-height: 1; letter-spacing: -.06em; margin: 0; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 18px; line-height: 1.62; }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .product-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 386px;
+      padding: 24px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.76);
+      border: 1px solid rgba(255,255,255,.86);
+      box-shadow: 0 18px 54px rgba(6,37,56,.08);
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 28px 76px rgba(6,37,56,.13); }
+    .product-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -100px auto;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(49,195,206,.2), transparent 66%);
+      pointer-events: none;
+    }
+    .product-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .product-icon { width: 64px; height: 64px; filter: drop-shadow(0 12px 22px rgba(6,37,56,.12)); }
+    .product-name { font-size: 24px; font-weight: 850; letter-spacing: -.045em; }
+    .product-tag { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; margin-top: 2px; }
+    .product-card p { color: var(--muted); line-height: 1.6; margin: 0 0 18px; font-size: 15.5px; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 18px; }
+    .chip { border: 1px solid rgba(6,37,56,.1); background: rgba(234,244,246,.72); color: var(--ink-2); padding: 7px 10px; border-radius: 999px; font-size: 12px; font-weight: 760; }
+    .card-link { margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-weight: 820; }
+
+    .wide { grid-column: span 2; }
+    .dark-card {
+      background:
+        radial-gradient(circle at 14% 0%, rgba(49,195,206,.25), transparent 38%),
+        radial-gradient(circle at 96% 28%, rgba(239,108,90,.3), transparent 35%),
+        linear-gradient(135deg, #062538, #0a526c);
+      color: #f3ffff;
+      border-color: rgba(255,255,255,.1);
+    }
+    .dark-card p, .dark-card .product-tag { color: rgba(232,251,252,.74); }
+    .dark-card .chip { background: rgba(255,255,255,.09); color: #dcffff; border-color: rgba(255,255,255,.13); }
+    .dark-card .card-link { color: #fff; }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+    .panel-card {
+      border-radius: var(--radius);
+      padding: 28px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.86);
+      box-shadow: 0 18px 54px rgba(6,37,56,.07);
+    }
+    .layer-list { display: grid; gap: 12px; margin-top: 22px; }
+    .layer {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.56);
+    }
+    .layer b { font-size: 14px; }
+    .layer span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .badge { display: inline-flex; width: fit-content; padding: 6px 10px; border-radius: 999px; background: rgba(49,195,206,.13); color: var(--ink-2); font-weight: 820; font-size: 12px; }
+
+    .open-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 26px; }
+    .open-item { padding: 18px; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.62); }
+    .open-item b { display: block; margin-bottom: 6px; }
+    .open-item span { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+    .cta-band {
+      margin: 36px 0 0;
+      padding: 34px;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(159,239,241,.32), transparent 36%),
+        radial-gradient(circle at 86% 30%, rgba(255,176,153,.36), transparent 40%),
+        #ffffff;
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .cta-band h2 { font-size: clamp(32px, 4.2vw, 54px); }
+    .cta-band p { color: var(--muted); line-height: 1.6; margin: 14px 0 0; max-width: 680px; }
+
+    footer { padding: 44px 0 64px; color: var(--muted); }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); padding-top: 24px; }
+    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-links a { font-weight: 720; }
+
+    @media (max-width: 980px) {
+      .hero, .section-head, .architecture, .cta-band { grid-template-columns: 1fr; }
+      .hero { padding-top: 54px; }
+      .hero-panel { min-height: auto; }
+      .trust, .products, .open-grid { grid-template-columns: repeat(2, 1fr); }
+      .wide { grid-column: span 1; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 28px, 1180px); }
+      .nav { min-height: 66px; }
+      .brand { font-size: 21px; }
+      .brand img { width: 34px; height: 34px; }
+      .hero { gap: 34px; }
+      .viz { grid-template-columns: 1fr; }
+      .side, .right { display: none; }
+      .trust, .products, .open-grid { grid-template-columns: 1fr; }
+      .section { padding: 60px 0; }
+      .product-card { min-height: auto; }
+      .footer-row { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a href="#top" class="brand" aria-label="Conmuta inicio">
+        <img src="icons/conmuta-symbol.svg" alt="" />
+        <span>Conmuta<small>Engineering software</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#productos">Productos</a>
+        <a href="#opennodex">OpenNodex</a>
+        <a href="#arquitectura">Arquitectura</a>
+        <a href="https://github.com/jpreyes" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="nav-cta" href="https://portico.conmuta.cl">Abrir Portico</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow">FEM · SHM · Hidráulica · Gemelos digitales</div>
+        <h1>Software de ingeniería para <span class="grad">estructuras reales.</span></h1>
+        <p class="lead">Conmuta reúne aplicaciones web de cálculo, modelación, monitoreo y análisis territorial: desde el pre/post proceso FEM de Portico/Nodex hasta plataformas de SHM e hidrología-hidráulica en el navegador.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://portico.conmuta.cl">Abrir Portico →</a>
+          <a class="btn btn-soft" href="#productos">Ver ecosistema</a>
+          <a class="btn btn-soft" href="https://github.com/jpreyes" target="_blank" rel="noreferrer">Código y repos</a>
+        </div>
+      </div>
+
+      <div class="hero-panel" aria-label="Vista conceptual del ecosistema Conmuta">
+        <div class="window">
+          <div class="windowbar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="window-title">conmuta studio · nodex runtime</span>
+          </div>
+          <div class="viz">
+            <aside class="side" aria-hidden="true">
+              <div class="tree-line" style="width:86%"></div>
+              <div class="tree-line"></div>
+              <div class="tree-line"></div>
+              <div class="tree-line" style="width:62%"></div>
+              <div class="tree-line" style="width:78%"></div>
+              <div class="tree-line"></div>
+              <div class="tree-line" style="width:52%"></div>
+            </aside>
+            <div class="canvas">
+              <svg viewBox="0 0 520 390" role="img" aria-label="Modelo FEM conceptual con nodos, elementos y campo de resultados">
+                <defs>
+                  <linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#31c3ce"/><stop offset="1" stop-color="#ef6c5a"/></linearGradient>
+                  <radialGradient id="glow" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#9feff1" stop-opacity=".7"/><stop offset="1" stop-color="#9feff1" stop-opacity="0"/></radialGradient>
+                </defs>
+                <ellipse cx="260" cy="210" rx="178" ry="124" fill="url(#glow)"/>
+                <g fill="none" stroke="#0a526c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+                  <path d="M142 300 L142 116 L252 82 L380 132 L380 300"/>
+                  <path d="M142 116 L380 132 M142 210 L380 210 M142 300 L380 300"/>
+                  <path d="M142 116 L252 210 L380 132 M142 300 L252 210 L380 300" opacity=".45"/>
+                </g>
+                <path d="M142 300 C188 250 245 232 306 246 C342 254 366 277 380 300" fill="none" stroke="url(#beam)" stroke-width="12" stroke-linecap="round" opacity=".92"/>
+                <g fill="#fff" stroke="#062538" stroke-width="4">
+                  <circle cx="142" cy="300" r="12"/><circle cx="142" cy="116" r="12"/><circle cx="252" cy="82" r="12"/><circle cx="380" cy="132" r="12"/><circle cx="380" cy="300" r="12"/><circle cx="252" cy="210" r="12"/>
+                </g>
+                <g fill="#ef6c5a"><circle cx="306" cy="246" r="7"/><circle cx="350" cy="276" r="6"/></g>
+              </svg>
+              <div class="pill-stack"><span class="mini-pill">Static</span><span class="mini-pill">Modal</span><span class="mini-pill">SHM</span><span class="mini-pill">Hydraulics</span></div>
+            </div>
+            <aside class="right" aria-hidden="true">
+              <div class="gauge"></div>
+              <div class="tree-line" style="width:76%"></div>
+              <div class="tree-line" style="width:95%"></div>
+              <div class="tree-line" style="width:64%"></div>
+              <div class="tree-line" style="width:88%"></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap trust" aria-label="Principios de Conmuta">
+      <div class="trust-card"><b>Cliente primero</b><span>Cálculo y visualización en el navegador cuando sea posible.</span></div>
+      <div class="trust-card"><b>Física + datos</b><span>FEM, señales, mapas, sensores y modelos interoperables.</span></div>
+      <div class="trust-card"><b>Open core</b><span>Componentes abiertos para extender, auditar y enseñar.</span></div>
+      <div class="trust-card"><b>Ingeniería real</b><span>Herramientas pensadas para proyectos, docencia e investigación aplicada.</span></div>
+    </section>
+
+    <section id="productos" class="wrap section">
+      <div class="section-head">
+        <div><div class="kicker">Ecosistema</div><h2>Una familia de productos con un mismo lenguaje visual.</h2></div>
+        <p>Los iconos siguen el estilo koi-flow: núcleos profundos, corrientes circulares cian/coral, formas suaves y símbolos técnicos simplificados. La idea es que cada producto se sienta propio, pero claramente parte de Conmuta.</p>
+      </div>
+
+      <div class="products">
+        <article class="product-card dark-card wide">
+          <div class="product-top">
+            <img class="product-icon" src="icons/portico-symbol.svg" alt="" />
+            <div><div class="product-name">Portico + Nodex</div><div class="product-tag">Pre/post FEM + motor avanzado</div></div>
+          </div>
+          <p>Modelación estructural 3D, análisis, visualización de resultados y conexión con Nodex como motor FEM C++/WASM. Portico es la interfaz; Nodex es el núcleo numérico para análisis avanzados.</p>
+          <div class="chips"><span class="chip">Frame</span><span class="chip">Shell</span><span class="chip">Modal</span><span class="chip">Nonlinear</span><span class="chip">WASM</span></div>
+          <a class="card-link" href="https://portico.conmuta.cl">Abrir portico.conmuta.cl →</a>
+        </article>
+
+        <article class="product-card">
+          <div class="product-top">
+            <img class="product-icon" src="icons/rewind-symbol.svg" alt="" />
+            <div><div class="product-name">ReWind</div><div class="product-tag">SHM para parques eólicos</div></div>
+          </div>
+          <p>Gemelos digitales, sensores, flota 3D, avance 4D y diagnóstico estructural por torre para parques eólicos y torres asociadas.</p>
+          <div class="chips"><span class="chip">SHM</span><span class="chip">Wind farms</span><span class="chip">3D fleet</span></div>
+          <a class="card-link" href="https://github.com/jpreyes/wind-shm" target="_blank" rel="noreferrer">Ver repo →</a>
+        </article>
+
+        <article class="product-card">
+          <div class="product-top">
+            <img class="product-icon" src="icons/koi-flow-symbol.svg" alt="" />
+            <div><div class="product-name">Koi-Flow</div><div class="product-tag">Hidrología, hidráulica y socavación</div></div>
+          </div>
+          <p>Aplicación web para cuencas, hidrología, hidráulica 1D/2D, batimetría CAD, puentes, alcantarillas, socavación e informes.</p>
+          <div class="chips"><span class="chip">DGA</span><span class="chip">MC-V3</span><span class="chip">HEC-RAS</span></div>
+          <a class="card-link" href="https://github.com/jpreyes/koi-flow" target="_blank" rel="noreferrer">Ver repo →</a>
+        </article>
+
+        <article id="opennodex" class="product-card">
+          <div class="product-top">
+            <img class="product-icon" src="icons/opennodex-symbol.svg" alt="" />
+            <div><div class="product-name">OpenNodex</div><div class="product-tag">Core abierto y tooling FEM</div></div>
+          </div>
+          <p>Capa abierta del ecosistema Nodex: código, compilador DSL, mallador, parsers, contratos de modelo y portico-core como base reusable.</p>
+          <div class="chips"><span class="chip">DSL</span><span class="chip">Mesher</span><span class="chip">IR</span><span class="chip">AGPL</span></div>
+          <a class="card-link" href="https://github.com/jpreyes/portico-core" target="_blank" rel="noreferrer">Ver portico-core →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="arquitectura" class="wrap section">
+      <div class="section-head">
+        <div><div class="kicker">Arquitectura</div><h2>De la interfaz al solver, sin perder trazabilidad.</h2></div>
+        <p>Conmuta puede presentarse como una familia coherente: interfaces web instalables, formatos abiertos de intercambio, motores WASM/locales y módulos especializados por dominio.</p>
+      </div>
+      <div class="architecture">
+        <div class="panel-card">
+          <span class="badge">Visión de producto</span>
+          <div class="layer-list">
+            <div class="layer"><b>Apps</b><span>Portico, ReWind, Koi-Flow y futuras herramientas verticales.</span></div>
+            <div class="layer"><b>Core</b><span>portico-core, OpenNodex, parsers, DSL, mesher y contratos de modelo.</span></div>
+            <div class="layer"><b>Runtime</b><span>Nodex WASM/native, solvers, sesiones, análisis paramétrico y generación de datasets.</span></div>
+            <div class="layer"><b>Datos</b><span>Modelos S3D/JSON, sensores, mapas, reportes, resultados y gemelos digitales.</span></div>
+          </div>
+        </div>
+        <div class="panel-card">
+          <span class="badge">OpenNodex components</span>
+          <div class="open-grid">
+            <div class="open-item"><b>nodex-code</b><span>Editor, lenguaje y asistencia para crear modelos FEM desde texto y scripts.</span></div>
+            <div class="open-item"><b>nodex-compiler</b><span>DSL/IR, orquestación de análisis, sweeps y datasets para ML.</span></div>
+            <div class="open-item"><b>nodex-mesher</b><span>Mallado estructural, geometría, conectividad y macros de elementos.</span></div>
+            <div class="open-item"><b>portico-core</b><span>Pre/post, visor 3D, formatos, verificaciones y base abierta del ecosistema.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-band">
+        <div>
+          <h2>Conmuta puede ser la marca madre.</h2>
+          <p>Portico/Nodex para cálculo estructural, ReWind para monitoreo, Koi-Flow para hidrología e hidráulica, y OpenNodex como capa abierta para comunidad, docencia e integración.</p>
+        </div>
+        <a class="btn btn-primary" href="https://github.com/jpreyes" target="_blank" rel="noreferrer">Explorar GitHub →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-row">
+      <div>© Conmuta · Software de ingeniería desarrollado por Juan P. Reyes.</div>
+      <div class="footer-links">
+        <a href="https://portico.conmuta.cl">Portico</a>
+        <a href="https://github.com/jpreyes/wind-shm" target="_blank" rel="noreferrer">ReWind</a>
+        <a href="https://github.com/jpreyes/koi-flow" target="_blank" rel="noreferrer">Koi-Flow</a>
+        <a href="https://github.com/jpreyes/portico-core" target="_blank" rel="noreferrer">portico-core</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
