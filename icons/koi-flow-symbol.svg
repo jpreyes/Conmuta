@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Koi-Flow symbol</title>
+  <desc id="desc">Soft hydrology and sediment icon based on koi-flow colors, with flow ribbons and terrain contour lines.</desc>
+  <defs>
+    <radialGradient id="core" cx="43%" cy="37%" r="68%"><stop offset="0" stop-color="#9FEFF1"/><stop offset=".42" stop-color="#168EAA"/><stop offset=".76" stop-color="#0A526C"/><stop offset="1" stop-color="#062538"/></radialGradient>
+    <linearGradient id="cyan" x1="78" y1="76" x2="420" y2="426" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C7F6EF"/><stop offset=".48" stop-color="#31C3CE"/><stop offset="1" stop-color="#07546D"/></linearGradient>
+    <linearGradient id="coral" x1="424" y1="80" x2="110" y2="436" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFE1D3"/><stop offset=".55" stop-color="#FF9B7D"/><stop offset="1" stop-color="#EF6C5A"/></linearGradient>
+    <filter id="shadow" x="-22%" y="-22%" width="144%" height="152%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#062538" flood-opacity=".18"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <circle cx="256" cy="256" r="156" fill="url(#core)"/>
+    <circle cx="204" cy="180" r="76" fill="#fff" opacity=".13"/>
+    <path d="M256 54A202 202 0 0 0 80 350" fill="none" stroke="url(#cyan)" stroke-width="34" stroke-linecap="round"/>
+    <path d="M256 458A202 202 0 0 0 432 162" fill="none" stroke="url(#coral)" stroke-width="34" stroke-linecap="round"/>
+    <path d="M126 282C182 330 260 332 318 292C360 263 390 250 420 258C397 314 340 356 272 366C204 376 152 348 126 282Z" fill="#E9FFFF" opacity=".48"/>
+    <path d="M104 334C150 382 236 408 320 376C360 360 392 332 414 300C362 330 316 336 262 326C204 314 158 320 104 334Z" fill="#FFB099" opacity=".34"/>
+    <g fill="none" stroke="#F6FFFF" stroke-width="14" stroke-linecap="round" opacity=".92">
+      <path d="M154 224C210 180 290 184 352 232"/>
+      <path d="M138 268C204 236 282 246 374 292"/>
+    </g>
+    <g fill="none" stroke="#31C3CE" stroke-width="6" stroke-linecap="round" opacity=".72">
+      <path d="M170 176C216 152 282 154 340 186"/>
+      <path d="M154 364C214 390 294 386 356 352"/>
+    </g>
+    <circle cx="190" cy="255" r="8" fill="#062538" opacity=".75"/><circle cx="326" cy="280" r="8" fill="#EF6C5A"/><circle cx="260" cy="246" r="7" fill="#062538" opacity=".65"/>
+  </g>
+</svg>
