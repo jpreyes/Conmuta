@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">OpenNodex symbol</title>
+  <desc id="desc">Koi-flow style open FEM tooling icon with mesh nodes, code bracket and compiler flow.</desc>
+  <defs>
+    <radialGradient id="core" cx="43%" cy="37%" r="68%"><stop offset="0" stop-color="#9FEFF1"/><stop offset=".42" stop-color="#168EAA"/><stop offset=".76" stop-color="#0A526C"/><stop offset="1" stop-color="#062538"/></radialGradient>
+    <linearGradient id="cyan" x1="78" y1="76" x2="420" y2="426" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C7F6EF"/><stop offset=".48" stop-color="#31C3CE"/><stop offset="1" stop-color="#07546D"/></linearGradient>
+    <linearGradient id="coral" x1="424" y1="80" x2="110" y2="436" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFE1D3"/><stop offset=".55" stop-color="#FF9B7D"/><stop offset="1" stop-color="#EF6C5A"/></linearGradient>
+    <filter id="shadow" x="-22%" y="-22%" width="144%" height="152%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#062538" flood-opacity=".18"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <circle cx="256" cy="256" r="156" fill="url(#core)"/>
+    <circle cx="204" cy="180" r="76" fill="#fff" opacity=".13"/>
+    <path d="M256 54A202 202 0 0 0 80 350" fill="none" stroke="url(#cyan)" stroke-width="34" stroke-linecap="round"/>
+    <path d="M256 458A202 202 0 0 0 432 162" fill="none" stroke="url(#coral)" stroke-width="34" stroke-linecap="round"/>
+    <g fill="none" stroke="#E9FFFF" stroke-linecap="round" stroke-linejoin="round" opacity=".95">
+      <path d="M160 184L118 256L160 328" stroke-width="22"/>
+      <path d="M352 184L394 256L352 328" stroke-width="22"/>
+      <path d="M230 342L282 170" stroke-width="18" opacity=".78"/>
+    </g>
+    <g stroke="#BFEFF1" stroke-width="6" opacity=".76">
+      <path d="M184 230L256 188L326 230L326 306L256 346L184 306Z" fill="none"/>
+      <path d="M184 230L326 306M326 230L184 306M256 188V346" fill="none"/>
+    </g>
+    <g fill="#062538" stroke="#FFFFFF" stroke-width="4">
+      <circle cx="184" cy="230" r="10"/><circle cx="256" cy="188" r="10"/><circle cx="326" cy="230" r="10"/><circle cx="326" cy="306" r="10"/><circle cx="256" cy="346" r="10"/><circle cx="184" cy="306" r="10"/>
+    </g>
+    <path d="M172 360C220 390 300 390 348 356" fill="none" stroke="#FF9B7D" stroke-width="13" stroke-linecap="round" opacity=".9"/>
+  </g>
+</svg>
